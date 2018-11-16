@@ -1,11 +1,43 @@
 .user-details {
-    margin-bottom: 44px;
+    
     padding-top: 40px;
     padding-bottom: 20px;
-    margin: 0 auto;
-    text-align: center;
+    margin-right: 25px;
+    vertical-align: top;
 }
-
+.user-address{
+    padding-top: 40px;
+    margin-left: 30px;
+    padding-bottom: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+.address-details{
+    
+    margin-left: 30px;
+    padding-bottom: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+.address-details h4{
+    display: inline-block;
+}
+.anticon-edit:hover{
+    color: #1890ff !important
+}
+.employee-details{
+    padding: 10px;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.employee-number,
+.job-desc,.designation{
+    vertical-align: top;
+    display: inline-block;
+    width: 33%;
+}
 .user-avatar-circle {
     width: 120px;
     height: 120px;
@@ -15,7 +47,7 @@
 
 .user-avatar-circle > * {
     line-height: 120px;
-    font-size: 40px;
+    font-size: 64px;
     position: relative !important;
     left: 0 !important;
 }
@@ -28,9 +60,12 @@
 @media (min-width: 576px) {
     .user-details {
         text-align: left;
-        display: table;
+        display: inline-block;
     }    
-
+    .user-address{
+        text-align: left;
+        width: 250px;
+    }
     .user-avatar, .user-summary {
         float: left;
         text-align: left;

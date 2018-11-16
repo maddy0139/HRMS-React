@@ -21,6 +21,7 @@ import ForgotPassword from '../user/forgotpass/ForgotPassword';
 import AdminLogin from '../admin/login/AdminLogin';
 import AdminRegistration from '../admin/signup/AdminRegistration';
 import Home from '../home/Home';
+import PersonalProfile from '../user/profile/PersonalProfile';
 const { Content } = Layout;
 
 class App extends Component {
@@ -131,9 +132,10 @@ class App extends Component {
                 <Route path="/admin/registration" component={AdminRegistration}></Route>
                 <Route path="/forgotpass" component={ForgotPassword}></Route>
                 <Route path="/users/:username" 
-                  render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
+                  render={(props) => <PersonalProfile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
                 </Route>
                 <PrivateRoute authenticated={this.state.isAuthenticated} path="/home" component={Home} handleLogout={this.handleLogout}></PrivateRoute>
+                <PrivateRoute authenticated={this.state.isAuthenticated} path="/profile" component={PersonalProfile} handleLogout={this.handleLogout}></PrivateRoute>
                 <Route component={NotFound}></Route>
               </Switch>
             </div>
