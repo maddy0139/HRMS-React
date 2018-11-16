@@ -19,6 +19,7 @@
     box-shadow: 0 2px 8px #f0f1f2;
     z-index: 10;
     padding: 0;
+    background-color: #096dd9;
   }
   
   .app-menu {
@@ -69,6 +70,35 @@
   .poll-icon {
     margin-top: -4px;
   }
+
+  .app-logo{
+    background: url('../logoImages.png');
+    width: 180px;
+    height: 60px;
+    background-color: #096dd9;
+  }
+  .ant-menu{
+    background-color: #096dd9 !important;
+  }
+  .ant-menu-item-selected{
+    color: #f0f1f2 !important;
+  }
+  .ant-menu-item-selected > a {
+    color: #f0f1f2 !important;
+    
+}
+.ant-menu-item>a:hover{
+  color: #f0f1f2 !important;
+}
+.ant-menu-item-active, .ant-menu-horizontal > .ant-menu-item-selected
+{
+  border-bottom: 0px solid #1890ff !important;
+  color: #f0f1f2 !important;
+}
+.ant-menu-horizontal{
+  border-bottom: 0px solid #e8e8e8 !important;
+}
+
 
 @media (max-width: 768px) {
   .app-title a {

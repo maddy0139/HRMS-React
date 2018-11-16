@@ -1,0 +1,18 @@
+.gutter-example .ant-row > div {
+    background: transparent;
+    border: 0;
+  }
+  .gutter-box {
+    background: #00A0E9;
+    padding: 5px 0;
+    color: white;
+    text-align: center;
+  }
+  .tile-gutter{
+      margin-top: 25px;
+  }
+  .gutter-row{
+    height: 90px !important;
+    line-height: 90px !important;
+    font-size: 13px;
+  }

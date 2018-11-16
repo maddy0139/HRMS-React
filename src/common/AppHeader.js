@@ -4,7 +4,6 @@ import {
     withRouter
 } from 'react-router-dom';
 import './AppHeader.css';
-import pollIcon from '../poll.svg';
 import { Layout, Menu, Dropdown, Icon } from 'antd';
 const Header = Layout.Header;
     
@@ -24,29 +23,22 @@ class AppHeader extends Component {
         let menuItems;
         if(this.props.currentUser) {
           menuItems = [
-            <Menu.Item key="/">
-              <Link to="/">
+            <Menu.Item key="/home">
+              <Link to="/home">
                 <Icon type="home" className="nav-icon" />
               </Link>
-            </Menu.Item>,
-            <Menu.Item key="/poll/new">
-            <Link to="/poll/new">
-              <img src={pollIcon} alt="poll" className="poll-icon" />
-            </Link>
-          </Menu.Item>,
+            </Menu.Item>,            
           <Menu.Item key="/profile" className="profile-menu">
                 <ProfileDropdownMenu 
                   currentUser={this.props.currentUser} 
-                  handleMenuClick={this.handleMenuClick}/>
+                  handleMenuClick={this.handleMenuClick}
+                  isAdmin={this.props.isAdmin}/>
             </Menu.Item>
           ]; 
         } else {
           menuItems = [
             <Menu.Item key="/login">
               <Link to="/login">Login</Link>
-            </Menu.Item>,
-            <Menu.Item key="/signup">
-              <Link to="/signup">Signup</Link>
             </Menu.Item>                  
           ];
         }
@@ -55,13 +47,13 @@ class AppHeader extends Component {
             <Header className="app-header">
             <div className="container">
               <div className="app-title" >
-                <Link to="/">Spadeworx Software</Link>
+                <Link to="/" className="app-logo"></Link>
               </div>
               <Menu
                 className="app-menu"
                 mode="horizontal"
                 selectedKeys={[this.props.location.pathname]}
-                style={{ lineHeight: '64px' }} >
+                style={{ lineHeight: '63px',fontSize:"1.5em",fontStyle:"italic",fontWeight:"600" }} >
                   {menuItems}
               </Menu>
             </div>
@@ -85,6 +77,11 @@ function ProfileDropdownMenu(props) {
       <Menu.Item key="profile" className="dropdown-item">
         <Link to={`/users/${props.currentUser.username}`}>Profile</Link>
       </Menu.Item>
+      {props.isAdmin &&
+        <Menu.Item key="admin" className="dropdown-item">
+          <Link to={`/admin/registration`}>Add New Admin</Link>
+        </Menu.Item>
+      }
       <Menu.Item key="logout" className="dropdown-item">
         Logout
       </Menu.Item>

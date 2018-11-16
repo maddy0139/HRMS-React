@@ -7,9 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { getCurrentUser } from '../util/APIUtils';
-import { ACCESS_TOKEN } from '../constants';
-
-import NewPoll from '../poll/NewPoll';
+import { ACCESS_TOKEN,APP_TITLE } from '../constants';
 import Login from '../user/login/Login';
 import Signup from '../user/signup/Signup';
 import Profile from '../user/profile/Profile';
@@ -20,6 +18,9 @@ import PrivateRoute from '../common/PrivateRoute';
 
 import { Layout, notification } from 'antd';
 import ForgotPassword from '../user/forgotpass/ForgotPassword';
+import AdminLogin from '../admin/login/AdminLogin';
+import AdminRegistration from '../admin/signup/AdminRegistration';
+import Home from '../home/Home';
 const { Content } = Layout;
 
 class App extends Component {
@@ -28,7 +29,8 @@ class App extends Component {
     this.state = {
       currentUser: null,
       isAuthenticated: false,
-      isLoading: false
+      isLoading: false,
+      isAdmin:false
     }
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -74,18 +76,26 @@ class App extends Component {
     this.props.history.push(redirectTo);
     
     notification[notificationType]({
-      message: 'Polling App',
+      message: APP_TITLE,
       description: description,
     });
   }
 
-  handleLogin() {
+  handleLogin(roles) {
+    if(roles)
+    {
+      roles.map(role=>{
+        if(role.name === "ROLE_ADMIN")
+            this.setState({isAdmin:true});
+      });
+    }
     notification.success({
-      message: 'Polling App',
+      message: APP_TITLE,
       description: "You're successfully logged in.",
     });
+
     this.loadCurrentUser();
-    this.props.history.push("/");
+    this.props.history.push("/home");
   }
 
   render() {
@@ -96,22 +106,34 @@ class App extends Component {
         <Layout className="app-container">
           <AppHeader isAuthenticated={this.state.isAuthenticated} 
             currentUser={this.state.currentUser} 
-            onLogout={this.handleLogout} />
+            onLogout={this.handleLogout} isAdmin = {this.state.isAdmin}/>
 
           <Content className="app-content">
             <div className="container">
-              <Switch>      
-                <Route exact path="/" 
-                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}>
-                </Route>
+              <Switch>  
+                {this.state.isAuthenticated &&
+                  <Route exact path="/" 
+                    render={(props) => <Home isAuthenticated={this.state.isAuthenticated} 
+                        currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                  </Route>
+                }
+                {!this.state.isAuthenticated &&
+                  <Route exact path="/" 
+                    render={(props) => <Login isAuthenticated={this.state.isAuthenticated} 
+                        currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
+                  </Route>
+                }  
                 <Route path="/login" 
-                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+                  render={(props) => <Login isAdmin={this.isAdmin} onLogin={this.handleLogin} {...props} />}></Route>
+                <Route path="/admin/login" 
+                  render={(props) => <AdminLogin isAdmin={this.isAdmin} onLogin={this.handleLogin} {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>
+                <Route path="/admin/registration" component={AdminRegistration}></Route>
                 <Route path="/forgotpass" component={ForgotPassword}></Route>
                 <Route path="/users/:username" 
                   render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
                 </Route>
-                <PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}></PrivateRoute>
+                <PrivateRoute authenticated={this.state.isAuthenticated} path="/home" component={Home} handleLogout={this.handleLogout}></PrivateRoute>
                 <Route component={NotFound}></Route>
               </Switch>
             </div>
