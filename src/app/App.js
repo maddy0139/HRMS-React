@@ -22,6 +22,7 @@ import AdminLogin from '../admin/login/AdminLogin';
 import AdminRegistration from '../admin/signup/AdminRegistration';
 import Home from '../home/Home';
 import PersonalProfile from '../user/profile/PersonalProfile';
+import UserLogin from '../user/login/Login';
 const { Content } = Layout;
 
 class App extends Component {
@@ -119,15 +120,14 @@ class App extends Component {
                   </Route>
                 }
                 {!this.state.isAuthenticated &&
-                  <Route exact path="/" 
-                    render={(props) => <Login isAuthenticated={this.state.isAuthenticated} 
-                        currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
-                  </Route>
+                  <Route path="/" 
+                  render={(props) => <UserLogin isAdmin={this.isAdmin} onLogin={this.handleLogin} {...props} />}></Route>
                 }  
-                <Route path="/login" 
-                  render={(props) => <Login isAdmin={this.isAdmin} onLogin={this.handleLogin} {...props} />}></Route>
+                
                 <Route path="/admin/login" 
                   render={(props) => <AdminLogin isAdmin={this.isAdmin} onLogin={this.handleLogin} {...props} />}></Route>
+                <Route path="/user/login" 
+                  render={(props) => <UserLogin isAdmin={this.isAdmin} onLogin={this.handleLogin} {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>
                 <Route path="/admin/registration" component={AdminRegistration}></Route>
                 <Route path="/forgotpass" component={ForgotPassword}></Route>
